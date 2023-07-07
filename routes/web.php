@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home'); //これがメインページ
-Route::resource('Posts', 'PostController'); //投稿
-Route::resource('Mypage', 'MypageController'); //マイページ
-
+Route::get('/home', 'HomeController@index')->name('home'); //メインページ
+Route::resource('posts', 'PostController'); //投稿
+Route::resource('users', 'UsersController'); //アカウント
+Route::get('mypage', [DisplayController::class, 'index'])->name('mypage.index');

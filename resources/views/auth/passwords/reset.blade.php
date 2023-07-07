@@ -2,6 +2,18 @@
 
 @section('content')
 <div class="container">
+
+<!--バリデーション-->
+<div>  
+        @if ($errors->any())  
+            <ul>  
+                @foreach ($errors->all() as $error)  
+                    <li class="text-danger list-unstyled">{{ $error }}</li>  
+                @endforeach  
+            </ul>  
+        @endif  
+</div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -31,13 +43,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 
@@ -45,7 +52,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                             </div>
                         </div>
 

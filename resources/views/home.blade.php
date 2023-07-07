@@ -1,36 +1,43 @@
 @extends('layouts.app')
-<script src="{{ asset('js/resize.js') }}" defer></script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 d-flex">
             <form action="" mehod="GET"> 
-            @csrf<!--外部からアクセスされないようにする！form action使うとき必ず入れる！-->
+                @csrf<!--外部アクセス拒否-->
                 <input type="text" name="username" placeholder="ユーザ名">
                 <input type="text" name="title" placeholder="タイトル">
                 <input type="date" name="date" placeholder="ユーザ名">
                 <button type="submit" class="btn btn-primary text-nowrap">投稿検索</button>
             </form>
-            <a href="{{ route('Posts.create') }}">
+    
+            <a href="{{ route('posts.create') }}"><!--★新規投稿画面へ遷移-->
                 <button type="submit" class="btn btn-primary text-nowrap">新規追加</button>
             </a>
-            <a href="{{ route('Mypage.index') }}">
+            <a href="{{ route('mypage.index') }}"><!--★マイページへ遷移-->
                 <button type="submit" class="btn btn-primary text-nowrap">マイページへ</button>
             </a>
+            
         </div> 
     </div>
-    <table>
-            @foreach($posts as $post)
+</div>
+<div class="bg-success mt-5 p-5"  style="padding: auto;">
+    <div class="text-left d-flex flex-wrap" style="margin-left: 160px; margin-right: 140px;">
+        @foreach($posts as $post)
+            <table class="bg-info p-5 mb-5" style="margin: 10px;">
                 <tr>
-                    <th scope='col'><a href="{{ route('Posts.show',$post['id']) }}">{{ $post['title'] }}</a></th>
-                    
-                    <th scope='col'>{{ $post['date'] }}</th>
+                    <th scope='col' class="p-3"><a href="{{ route('posts.show',$post['id']) }}" class="text-secondary">{{ $post['title'] }}</a></th> <!--★詳細画面へ遷移-->      
+                    <th scope='col' class="pr-3">{{ $post['date'] }}</th>
                 </tr>
                 <tr>
-                    <th scope='col'>{{ $post['post'] }}</th>
-                    <th scope='col'><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px;"></th>
+                    <th scope='col' class="pl-3">{{ $post['post'] }}</th>
                 </tr>
-            @endforeach
+                <tr>
+                    <th scope='col' class="pl-3 pb-3"><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;"></th>
+                </tr>
             </table>
+        @endforeach
+    </div>
 </div>
 @endsection

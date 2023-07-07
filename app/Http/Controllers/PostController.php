@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Http\Request;
-use InterventionImage;
+use Intervention\Image\Facades\Image;
 
 
 class PostController extends Controller
@@ -25,10 +25,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() //新規投稿について
+    public function create() //新規投稿画面へ遷移
     {
+        
         return view("post_new");
-        //新規追加しているからview
     }
 
     /**
@@ -38,37 +38,35 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function store(Request $request) //新規投稿したものがDBに保存され手メインページへ配置される場所
+    public function store(Request $request, Post $post) //新規投稿したものがDBに保存され手メインページへ配置される場所
     {
-        $post = new Post;
+        //新規投稿時のバリデーション
+        $request->validate([
+            "title" => "required|max:255",
+            "date" => "required",
+            "post" => "required|max:500"
+        ]);
 
         $post->title = $request->title;
         $post->date = $request->date;
         $post->post = $request->post;
         $post->users_id = Auth::id();
         
-        //画像ファイルの保存場所
-         if($request->image){
-            $image=$request->file('image')->getClientOriginalName();
+        if($request->image){
+
+            //画像ファイルの保存場所
+             $image=$request->file('image')->getClientOriginalName();
             //写真の名前ファイルの名前を取得する関数
             $request->file('image')->storeAs('',$image,'public');
             //第１引数(public/image)にどこに保存するのか記載。
             //第２引数($image)に何を保存するのかを記載。
-            $file = $request->file('image');
-            //画像のリサイズ
-            $resized = InterventionImage::make($file)->resize(100,100,function($constraint){
-                $constraint->aspectRatio();
-            })->save();
 
-            //画像の保存
-            Storage::put('public/' . $post->image, $resized);
-           
+            $post->image = $image;
         }
 
         $post->save();
 
         return redirect('/home');
-        //REDIRECT使用するのは新規追加ではなく更新をするから
     }
 
     /**
@@ -78,9 +76,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show($id) //各々の詳細ページが見れる
+    public function show(Request $request, Post $post) //各々の詳細ページが見れる
     {
-        $post = Post::find($id);
         return view('show')->with('post', $post);
     }
 
@@ -90,10 +87,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) //投稿編集画面
+    public function edit(Post $post) //投稿編集画面
     {
-        // $data = Post::findOrFail($id);
-        // return view('edit',['message' => '編集フォーム','data' => $data]);
+        return view('edit')->with('post', $post);
     }
 
     /**
@@ -103,9 +99,35 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Post $post) //投稿の更新
-    {
-        //
+    {  
+        //投稿編集時のバリデーション
+        $request->validate([
+            "title" => "required|max:255",
+            "date" => "required",
+            "post" => "required|max:500"
+        ]);
+
+        $post->title = $request->title;
+        $post->date = $request->date;
+        $post->post = $request->post;
+        $post->users_id = Auth::id();
+        
+        if($request->image){
+
+            //画像ファイルの保存場所
+             $image=$request->file('image')->getClientOriginalName();
+            //写真の名前ファイルの名前を取得する関数
+            $request->file('image')->storeAs('',$image,'public');
+            //第１引数(public/image)にどこに保存するのか記載。
+            //第２引数($image)に何を保存するのかを記載。
+            
+            $post->image = $image;
+        }
+
+        $post->save();
+        return redirect('/home');
     }
 
     /**
@@ -116,6 +138,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post) //投稿削除
     {
-        //
+        $post->delete();
+        return redirect('/home');
     }
 }

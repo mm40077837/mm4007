@@ -1,30 +1,33 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 
-use App\Mypage;
 use Illuminate\Http\Request;
 
-class MypageController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, User $user)
     {
-        //
+        return view('mypage',
+            compact('users')
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @param  int  $id
      */
     public function create()
     {
-        //
+        return view("user_create");
     }
 
     /**
@@ -33,7 +36,7 @@ class MypageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         //
     }
@@ -41,45 +44,56 @@ class MypageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mypage  $mypage
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Mypage $mypage)
+    public function show($id)
     {
-        //
+        return redirect('mypage');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mypage  $mypage
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mypage $mypage)
+    public function edit(User $user)
     {
-        //
+        return view('user_edit')->with('user', $user);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mypage  $mypage
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mypage $mypage)
+    public function update(Request $request, User $user)
     {
-        //
+        //アカウント編集時のバリデーション
+        $request->validate([
+            "name" => "required|max:255",
+            "email" => "required|email:filter,dns",
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        
+        $user->save();
+        return redirect('mypage');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mypage  $mypage
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mypage $mypage)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect('/home');
     }
 }

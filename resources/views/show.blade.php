@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>写真</th>
-            <td>{{ $post->image }}</td>
+            <td><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;"></td>
         </tr>
     </table>
     <div class="text-right">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UsersController extends Controller
 {
@@ -12,11 +13,11 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, User $user)
+    public function index(User $user)
     {
-        return view('mypage',
-            compact('users')
-        );
+        return view('user_create',[
+            "users" => $user,
+        ]);
     }
 
     /**
@@ -37,7 +38,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user)
-    {
+    {   
         //
     }
 
@@ -80,6 +81,21 @@ class UsersController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+
+        if($request->icon){
+
+            //画像ファイルの保存場所
+             $image=$request->file('icon')->getClientOriginalName();
+            //写真の名前ファイルの名前を取得する関数
+            $request->file('icon')->storeAs('',$image,'public');
+            //第１引数(public/image)にどこに保存するのか記載。
+            //第２引数($image)に何を保存するのかを記載。
+            
+            $user->icon = $image;
+        }
+
+        $user->save();
+        return redirect('mypage');
         
         $user->save();
         return redirect('mypage');

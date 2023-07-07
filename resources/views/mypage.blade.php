@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class=""><!--アカウント表示-->
-    <div class=""></div>
-    <div class="">{{ Auth::user()->icon }}</div>
+<div class="text-center"><!--アカウント表示-->
+    <div class=""><img src="{{ asset('storage/'.Auth::user()->icon) }}" style="width: 230px; height: 230px; object-fit: cover; border-radius: 50%;"></div>
     <div class="">{{ Auth::user()->name }}</div>
     <div class="">{{ Auth::user()->email }}</div>
     <div class="">
@@ -15,7 +14,7 @@
                         @method('delete')
                         <button type="submit" class="btn btn-primary text-nowrap">退会</button>
                     </a>
-                    <a href="{{ route('users.create')}}"><!--★アカウントアイコン追加機能-->
+                    <a href="{{ route('users.store')}}"><!--★アカウントアイコン追加機能-->
                         <button type="submit" class="btn btn-primary text-nowrap">アイコン追加</button>
                     </a>
 </div>
@@ -43,14 +42,15 @@
                     <form action="{{ route('posts.destroy',$post['id']) }}" method=POST onclick='return confirm("本当に削除しますか？");'><!--★投稿削除機能-->
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-primary text-nowrap">退会</button>
+                        <button type="submit" class="btn btn-primary text-nowrap">削除</button>
                     </form>
                 </th>
             </tr>
         </table>
     @endforeach    
+    
 </div>
 <div class="text-right">
         <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
-</div>
+    </div>
 @endsection

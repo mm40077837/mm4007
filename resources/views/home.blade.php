@@ -27,6 +27,7 @@
         @foreach($posts as $post)
             <table class="bg-info p-5 mb-5" style="margin: 10px;">
                 <tr>
+                    <th><img src="{{ asset('storage/'.Auth::user()->icon) }}" style=" padding: 10px; width: 90px; height: 90px; object-fit: cover; border-radius: 50%;"></th>
                     <th scope='col' class="p-3"><a href="{{ route('posts.show',$post['id']) }}" class="text-secondary">{{ $post['title'] }}</a></th> <!--★詳細画面へ遷移-->      
                     <th scope='col' class="pr-3">{{ $post['date'] }}</th>
                 </tr>

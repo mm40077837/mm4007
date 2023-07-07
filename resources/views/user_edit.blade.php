@@ -19,6 +19,7 @@
             @method('patch')
                 <!--enctype="multipart/form-data" をformに入れないとファイルは登録されない--> 
                 @csrf<!--外部アクセス拒否-->
+                <input type="file" id="icon" name="icon" value="{{ old('icon', Auth::user()->icon) }}"><br>
                 <input type="text" name="name" placeholder="氏名" value="{{ old('name', Auth::user()->name) }}"><br>
                 <input type="text" name="email" placeholder="メールアドレス" value="{{ old('email', Auth::user()->email) }}"><br>
                 <button type="submit" class="btn btn-primary">アカウントを編集する</button>

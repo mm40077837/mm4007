@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('users.iconupdate', Auth::id()) }}" method="POST" enctype="multipart/form-data">
         @csrf<!--外部アクセス禁止-->
         <input type="file" id="icon" name="icon">
         <button type="submit" class="btn btn-primary">アイコンを追加する</button>

@@ -14,7 +14,7 @@
             <a href="{{ route('Posts.create') }}">
                 <button type="submit" class="btn btn-primary text-nowrap">新規追加</button>
             </a>
-            <a href="{{ route('Mypage.create') }}">
+            <a href="{{ route('Mypage.index') }}">
                 <button type="submit" class="btn btn-primary text-nowrap">マイページへ</button>
             </a>
         </div> 
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <th scope='col'>{{ $post['post'] }}</th>
-                    <th scope='col'><img src="{{ asset('storage/'.$post['image']) }}"></th>
+                    <th scope='col'><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px;"></th>
                 </tr>
             @endforeach
             </table>

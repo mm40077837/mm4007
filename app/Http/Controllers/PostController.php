@@ -37,6 +37,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request) //新規投稿したものがDBに保存され手メインページへ配置される場所
     {
         $post = new Post;
@@ -45,7 +46,6 @@ class PostController extends Controller
         $post->date = $request->date;
         $post->post = $request->post;
         $post->users_id = Auth::id();
-       
         
         //画像ファイルの保存場所
          if($request->image){

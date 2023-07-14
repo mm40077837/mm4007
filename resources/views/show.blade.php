@@ -5,7 +5,11 @@
     <table class="table table-st riped p-5 mb-5 bg-info" >
         <tr>
             <th>タイトル</th>
-            <td>{{ $post->title }}</td>
+            <td>{{ $post->title }}</td>   
+        </tr>
+        <tr>
+            <th>投稿者</th>
+            <td>{{ $post['user']['name'] }}</td>   
         </tr>
         <tr>
             <th>投稿日</th>
@@ -25,32 +29,31 @@
                 @endif
             </td>
         </tr>
+
         <tr>
-                <th scope='col' class="pl-3 pb-3">
-                    <a href="{{ route('comments.create' ,['post'=>$post['id']] ) }}"><!--★コメント入力画面へ遷移-->
-                        <button type="submit" class="text-white">💬:コメント</button>
-                    </a>
-                </th>
-                <th scope='col' class="pl-3 pb-3 text-white">
-                    ❤:いいね
-                </th>
-            </tr>
-            @foreach($comment as $comments)
-            <tr>
-                <td>氏名:
-                    {{ $comments['user']['name'] }}
-                </td>
-            </tr>
-            <tr>
-                <td>コメントが入力される :
-                       {{ $comments['comment']}}
-                </td>
-         </tr>
-         @endforeach
-                   
+            <th scope='col' class="pl-3 pb-3">
+                <a href="{{ route('comments.create' ,['post'=>$post['id']] ) }}"><!--★コメント入力画面へ遷移-->
+                    <button type="submit" class="text-white">💬:コメント</button>
+                </a>
+            </th>
+            <th scope='col' class="pl-3 pb-3 text-white">
+                ❤:いいね
+            </th>
+        </tr>
+        @foreach($comment as $comments) 
+        <tr>
+            <th>  
+                {{ $comments['user']['name'] }}<br>
+                コメント : {{ $comments['comment']}}
+            </th>
+        </tr>    
+        @endforeach            
     </table>
     <div class="text-right">
         <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+        <form action="{{ route('violation.create',['post'=>$post['id']]) }}" method="get"> <!--★違反報告ページへ遷移-->
+            <button type="submit" class="btn btn-primary text-nowrap">違反報告ページへ</button>
+        </form>
     </div>
 </div>
 

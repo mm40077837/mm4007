@@ -2,7 +2,12 @@
 
 @section('content')
 <div class="text-center"><!--アカウント表示-->
-    <div class=""><img src="{{ asset('storage/'.Auth::user()->icon) }}" style="width: 230px; height: 230px; object-fit: cover; border-radius: 50%;"></div>
+    <div class="">
+        @if(empty(Auth::user()->icon))
+        NO IMAGE
+        @elseif(!empty(Auth::user()->icon))
+        <img src="{{ asset('storage/'.Auth::user()->icon) }}" style="width: 230px; height: 230px; object-fit: cover; border-radius: 50%;"></div>
+        @endif
     <div class="">{{ Auth::user()->name }}</div>
     <div class="">{{ Auth::user()->email }}</div>
     <div class="">
@@ -25,6 +30,7 @@
     @foreach($posts as $post)
         <table class="bg-info p-5 mb-5" style="margin: 10px;">
             <tr>
+                
                 <th scope='col' class="p-3">{{ $post['title'] }}</th>
                 <th scope='col' class="pr-3">{{ $post['date'] }}</th>
             </tr>

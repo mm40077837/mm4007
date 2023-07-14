@@ -30,3 +30,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+/**
+  *いいね機能のajax
+ */
+require('./ajaxlike.js')

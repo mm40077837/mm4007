@@ -17,12 +17,42 @@
         </tr>
         <tr>
             <th>写真</th>
-            <td><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;"></td>
+            <td>
+                @if(empty($post['image']))
+                 画像の投稿はありません
+                @elseif(!empty($post['image']))
+                <img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;">
+                @endif
+            </td>
         </tr>
+        <tr>
+                <th scope='col' class="pl-3 pb-3">
+                    <a href="{{ route('comments.create' ,['post'=>$post['id']] ) }}"><!--★コメント入力画面へ遷移-->
+                        <button type="submit" class="text-white">💬:コメント</button>
+                    </a>
+                </th>
+                <th scope='col' class="pl-3 pb-3 text-white">
+                    ❤:いいね
+                </th>
+            </tr>
+            @foreach($comment as $comments)
+            <tr>
+                <td>氏名:
+                    {{ $comments['user']['name'] }}
+                </td>
+            </tr>
+            <tr>
+                <td>コメントが入力される :
+                       {{ $comments['comment']}}
+                </td>
+         </tr>
+         @endforeach
+                   
     </table>
     <div class="text-right">
         <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
     </div>
 </div>
+
 @endsection
 

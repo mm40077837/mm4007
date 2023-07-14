@@ -25,5 +25,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home'); //メインページ
 Route::resource('posts', 'PostController'); //投稿
 Route::resource('users', 'UsersController'); //アカウント
+Route::resource('comments', 'CommentController'); //コメント
 Route::get('/mypage', [DisplayController::class, 'index'])->name('mypage.index');
 Route::post('/user_create/{user}', [DisplayController::class, 'iconupdate'])->name('users.iconupdate');
+Route::post('/home', 'PostsController@index')->name('posts.index');

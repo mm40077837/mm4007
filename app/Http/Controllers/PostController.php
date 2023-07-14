@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Comment;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+
 
 
 class PostController extends Controller
@@ -76,9 +78,12 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show(Request $request, Post $post) //各々の詳細ページが見れる
+    public function show(Request $request, Post $post, Comment $comment) //各々の詳細ページが見れる
     {
-        return view('show')->with('post', $post);
+        $all = $comment->with('user')->where('posts_id','=',$post['id'])->get()->toArray();
+
+        return view('show')->with( ['post'=> $post ,'comment'=>$all] );
+
     }
 
     /**

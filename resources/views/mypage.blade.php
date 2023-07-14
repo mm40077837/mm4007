@@ -17,6 +17,8 @@
                     <a href="{{ route('users.store')}}"><!--★アカウントアイコン追加機能-->
                         <button type="submit" class="btn btn-primary text-nowrap">アイコン追加</button>
                     </a>
+                    <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+    </div>
 </div>
 
 <div class="text-left d-flex flex-wrap" style="margin-left: 80px; margin-right: 30px;">
@@ -30,7 +32,13 @@
                 <th scope='col' class="pl-3">{{ $post['post'] }}</th>
             </tr>
             <tr>
-                <th scope='col' class="pl-3 pb-3"><img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;"></th>
+                <th scope='col' class="pl-3 pb-3">
+                    @if(empty($post['image']))
+                    画像の投稿はありません
+                    @elseif(!empty($post['image']))
+                    <img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;">
+                    @endif
+                </th>
             </tr>
             <tr>
                 <th>
@@ -39,18 +47,17 @@
                     </a>
                 </th>
                 <th>
-                    <form action="{{ route('posts.destroy',$post['id']) }}" method=POST onclick='return confirm("本当に削除しますか？");'><!--★投稿削除機能-->
+                    <form action="{{ route('posts.destroy',$post['id']) }}" method="POST" onclick='return confirm("本当に削除しますか？");'><!--★投稿削除機能-->
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-primary text-nowrap">削除</button>
                     </form>
                 </th>
+                
             </tr>
         </table>
     @endforeach    
     
 </div>
-<div class="text-right">
-        <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
-    </div>
+
 @endsection

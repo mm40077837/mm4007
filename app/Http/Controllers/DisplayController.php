@@ -37,4 +37,5 @@ class DisplayController extends Controller
         $user->save();
         return redirect('mypage');
     }
+    
 }

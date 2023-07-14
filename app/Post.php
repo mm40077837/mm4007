@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\HasMany;
 
 class Post extends Model
 {
@@ -13,5 +14,10 @@ class Post extends Model
 
      public function user(){
         return $this->belongsTo('App\User', 'users_id', 'id');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany('App\Comment');
     }
 }

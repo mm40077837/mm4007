@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Comment;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,7 @@ class HomeController extends Controller
     {
         $post = new Post;
 
-        $all = $post->all()->toArray();
+        $all = $post->with('user')->get()->toArray();
 
         return view('home',[
             'posts' => $all,

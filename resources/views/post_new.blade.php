@@ -15,20 +15,19 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 text-center p-5">
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 <!--enctype="multipart/form-data" をformに入れないとファイルは登録されない--> 
                 @csrf<!--外部アクセス拒否-->
-                <input type="text" name="title" placeholder="タイトル" value="{{ old('title') }}"><br>
-                <input type="date" name="date" placeholder="0000/00/00" value="{{ old('date') }}"><br>
-                <textarea name="post">{{ old('post') }}</textarea><br>
-                <input type="file" id="image" name="image">
-                <button type="submit" class="btn btn-primary">投稿する</button>
+                <input type="text" name="title" class="m-3" placeholder="タイトル" value="{{ old('title') }}"><br>
+                <input type="date" name="date" class="m-3" placeholder="0000/00/00" value="{{ old('date') }}"><br>
+                <textarea name="post" class="m-3">{{ old('post') }}</textarea><br>
+                <input type="file" id="image" name="image" class="m-3"><br>
+                <button type="submit" class="btn btn-primary" class="m-3">新規投稿する</button>
+                <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
             </form>
         </div>
-        <div class="text-right">
-            <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
-        </div>
+        
     </div>
 </div>
 @endsection

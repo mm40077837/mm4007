@@ -96,9 +96,7 @@ class UsersController extends Controller
 
         $user->save();
         return redirect('mypage');
-        
-        $user->save();
-        return redirect('mypage');
+
     }
 
     /**

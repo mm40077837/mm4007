@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Comment;
 use App\User;
+use App\Like;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -20,6 +21,7 @@ class PostController extends Controller
     public function index()
     {
         //
+    
     }
 
     /**
@@ -78,13 +80,49 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show(Request $request, Post $post, Comment $comment, User $user) //各々の詳細ページが見れる
+    public function show(Post $post, Comment $comment, User $user) //各々の詳細ページが見れる
     {
+        // ユーザの投稿の一覧を作成日時の降順で取得
+        //withCount('テーブル名')とすることで、リレーションの数も取得。
+        $posts = Post::where('id' ,$post['id'])->with('user')->withCount('likes')->orderBy('created_at', 'desc')->first()->toArray();
+   
+        $like_model = new Like;
         
         $all = $comment->with('user')->where('posts_id','=',$post['id'])->get()->toArray();
+        
+        return view('show')->with( ['post'=> $posts ,'comment'=>$all, 'like_model'=>$like_model,] );
+    }
 
-        return view('show')->with( ['post'=> $post ,'comment'=>$all] );
+        public function ajaxlike(Request $request)
+    {
+        $id = Auth::user()->id;
+        $posts_id = $request->posts_id;
+        $like = new Like;
+        $post = Post::findOrFail($posts_id);
 
+        // 空でない（既にいいねしている）なら
+        if ($like->like_exist($id, $posts_id)) {
+            //likesテーブルのレコードを削除
+            $like = Like::where('posts_id', $posts_id)->where('users_id', $id)->delete();
+        } else {
+            //空（まだ「いいね」していない）ならlikesテーブルに新しいレコードを作成する
+            $like = new Like;
+            $like->posts_id = $request->posts_id;
+            $like->users_id = Auth::user()->id;
+            $like->save();
+        }
+
+        //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
+        $postLikesCount = $post->loadCount('likes')->likes_count;
+        $exist = Like::where('posts_id', $posts_id)->where('users_id', $id)->first();
+        //一つの変数にajaxに渡す値をまとめる
+        //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
+        $json = [
+            'postLikesCount' => $postLikesCount,
+            'exist' => $exist,
+        ];
+        //下記の記述でajaxに引数の値を返す
+        return response()->json($json);
     }
 
     /**
@@ -108,7 +146,7 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post) //投稿の更新
     {  
-        //投稿編集時のバリデーション
+        // //投稿編集時のバリデーション
         $request->validate([
             "title" => "required|max:255",
             "date" => "required",

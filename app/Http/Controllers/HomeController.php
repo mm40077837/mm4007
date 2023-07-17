@@ -55,7 +55,8 @@ class HomeController extends Controller
                 
             });
         }
-        $posts = $query->orderBy('date','desc')->get();
+        $type = 0;
+        $posts = $query->where('del_flg', $type)->orderBy('date','desc')->get();
         // dd($posts[0]->user);
 
         return view('home', compact('posts','keyword'));

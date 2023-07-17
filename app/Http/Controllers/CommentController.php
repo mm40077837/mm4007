@@ -88,8 +88,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        
+        return redirect()->route('posts.show',$comment['posts_id']);
+
     }
 }

@@ -56,8 +56,53 @@ class DisplayController extends Controller
         $violation->posts_id = $request->posts_id;
 
         $violation->save();
+        return redirect('/home');
+    }
+    public function administrator() //管理者画面（ユーザーの一覧）
+    {
+        $user = new User;
+       
+        $a = $user->withCount([
+                'post AS total_view_count' => function($query){
+                 $type = 1;
+                 $query->where('del_flg', $type); }])->orderBy('total_view_count','desc')->take(10)->get()->toArray();
 
-        
+            return view('/user_list',[
+                'a' => $a,
+            ]);
     }
 
-}
+    public function adminpost(User $user) //管理者画面（投稿の一覧）
+    {
+        $post = new Post;
+        $type = 0;
+
+        //userも含めた全件取得
+        $all = $post->where('del_flg', $type)->with('user')->withCount('violation')->orderBy('violation_count','desc')->take(20)->get()->toArray();
+        
+        return view('post_list',[
+            'posts' => $all,
+        ]);
+     }
+
+     public function logicaldelete($id) //表示停止
+     { 
+
+        //インスタンス化
+        $post = new Post;
+        
+        //モデルから対処とするカラムの抽出
+        
+        $record = $post->find($id);
+       
+        $record->del_flg = 1;
+        
+        $record->save();
+
+        return redirect('post_list');
+
+    }
+    }
+    
+    
+

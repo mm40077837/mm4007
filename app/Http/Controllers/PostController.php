@@ -171,7 +171,7 @@ class PostController extends Controller
         }
 
         $post->save();
-        return redirect('/home');
+        return redirect('/mypage');
     }
 
     /**
@@ -183,6 +183,6 @@ class PostController extends Controller
     public function destroy(Post $post) //投稿削除
     {
         $post->delete();
-        return redirect('/home');
+        return redirect('/mypage');
     }
 }

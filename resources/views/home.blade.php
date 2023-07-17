@@ -56,8 +56,8 @@
     </div>
 </div>
 @else
-<div class="d-flex m-5 p-5">
-    <div class="">
+<div class="text-center">
+    <div class="m-5">
         <form action="{{ route('admin.strator') }}" method="get"> <!--★userの管理画面ページへ遷移-->
                     <button type="submit" class="btn btn-primary text-nowrap">ユーザー管理ページへ</button>
         </form>

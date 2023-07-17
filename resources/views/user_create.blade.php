@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="text-center my-5">
     <form action="{{ route('users.iconupdate', Auth::id()) }}" method="POST" enctype="multipart/form-data">
         @csrf<!--外部アクセス禁止-->
         <input type="file" id="icon" name="icon">
-        <button type="submit" class="btn btn-primary">アイコンを追加する</button>
+        <div class="my-5">
+            <button type="submit" class="btn btn-primary">アイコンを追加する</button>
+            <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+            <a href="/home" class="btn btn-secondary">ホームへ</a>
+        </div> 
     </form>
-    <div class="text-right">
-    <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
-</div>
+ </div>    
 @endsection

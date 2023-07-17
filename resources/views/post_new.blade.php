@@ -25,6 +25,7 @@
                 <input type="file" id="image" name="image" class="m-3"><br>
                 <button type="submit" class="btn btn-primary" class="m-3">新規投稿する</button>
                 <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+                <a href="/home" class="btn btn-secondary">ホームへ</a>
             </form>
         </div>
         

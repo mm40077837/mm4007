@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="text-center">
 
 <!--アカウント編集時のバリデーション-->
-<div>  
+<div class="">  
         @if ($errors->any())  
             <ul>  
                 @foreach ($errors->all() as $error)  
@@ -19,17 +19,15 @@
             @method('patch')
                 <!--enctype="multipart/form-data" をformに入れないとファイルは登録されない--> 
                 @csrf<!--外部アクセス拒否-->
-                <input type="file" id="icon" name="icon" value="{{ old('icon', Auth::user()->icon) }}"><br>
-                <input type="text" name="name" placeholder="氏名" value="{{ old('name', Auth::user()->name) }}"><br>
-                <input type="text" name="email" placeholder="メールアドレス" value="{{ old('email', Auth::user()->email) }}"><br>
+                アイコン: <input type="file" class="my-3" id="icon" name="icon" value="{{ old('icon', Auth::user()->icon) }}"><br>
+                氏名:<input type="text"  class="my-3" name="name" placeholder="氏名" value="{{ old('name', Auth::user()->name) }}"><br>
+                メールアドレス:<input type="text"  class="my-3" name="email" placeholder="メールアドレス" value="{{ old('email', Auth::user()->email) }}"><br>
                 <button type="submit" class="btn btn-primary">アカウントを編集する</button>
+                <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+                <a href="/home" class="btn btn-secondary">ホームへ</a>
             </form>
         </div>
     </div>
-</div>
-
-<div class="text-right">
-    <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
 </div>
 @endsection
 

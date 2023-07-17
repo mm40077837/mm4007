@@ -23,5 +23,7 @@
         @endif
         @endforeach
     </table>
-
+    <div class="text-right mx-5">
+        <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+    </div>
 @endsection

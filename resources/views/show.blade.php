@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="text-left" style="margin: auto; width: 500px;">
-    <table class="table table-st riped p-5 mb-5" style="background-color: #FFD700;">
+    <table class="table table-st riped p-5 mb-5" style="background-color: #008b8b;">
         <tr>
             <th>タイトル</th>
             <td>{{ $post['title'] }}</td>   
@@ -69,10 +69,11 @@
     <div class="text-right">
         <table>
         <tr>
-        <th><a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a></th>
         <th><form action="{{ route('violation.create',['post'=>$post['id']]) }}" method="get"> <!--★違反報告ページへ遷移-->
             <button type="submit" class="btn btn-primary text-nowrap">違反報告ページへ</button>
         </form></th>
+        <th><a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a></th>
+        <th><a href="/home" class="btn btn-secondary">ホームへ</a></th>
         </tr>
     </table>
     </div>

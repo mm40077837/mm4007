@@ -3,7 +3,7 @@
 @section('content')
 <div class="text-center my-5">
     <form action="{{ route('users.iconupdate', Auth::id()) }}" method="POST" enctype="multipart/form-data">
-        @csrf<!--外部アクセス禁止-->
+        @csrf
         <input type="file" id="icon" name="icon">
         <div class="my-5">
             <button type="submit" class="btn btn-primary">アイコンを追加する</button>

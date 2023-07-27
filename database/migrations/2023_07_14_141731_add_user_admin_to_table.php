@@ -14,7 +14,7 @@ class AddUserAdminToTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('admin')->nullable(); //デフォルトにはなく編集にて追加したカラム
+            $table->integer('admin')->nullable(); 
         });
     }
 
@@ -26,7 +26,7 @@ class AddUserAdminToTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('admin')->nullable();
         });
     }
 }

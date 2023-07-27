@@ -14,10 +14,10 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id'); //id
-            $table->string('post','10'); //投稿
-            $table->string('photo')->nullable(); //投稿画像名(必須ではない)
-            $table->integer('users_id');  //ユーザ名(誰が投稿したのか)
+            $table->bigIncrements('id'); 
+            $table->string('post','10'); 
+            $table->string('photo')->nullable(); 
+            $table->integer('users_id');  
             $table->timestamps();
         });
     }

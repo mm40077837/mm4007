@@ -73,7 +73,6 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //アカウント編集時のバリデーション
         $request->validate([
             "name" => "required|max:255",
             "email" => "required|email:filter,dns",
@@ -84,12 +83,9 @@ class UsersController extends Controller
 
         if($request->icon){
 
-            //画像ファイルの保存場所
-             $image=$request->file('icon')->getClientOriginalName();
-            //写真の名前ファイルの名前を取得する関数
+            $image=$request->file('icon')->getClientOriginalName();
+            
             $request->file('icon')->storeAs('',$image,'public');
-            //第１引数(public/image)にどこに保存するのか記載。
-            //第２引数($image)に何を保存するのかを記載。
             
             $user->icon = $image;
         }
@@ -108,6 +104,6 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect('/home');
+        return redirect('/login');
     }
 }

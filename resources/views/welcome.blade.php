@@ -84,8 +84,12 @@
                 <div class="title m-b-md text-danger">
                     Laravel
                 </div>
-
+    
                 <div class="links">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" name="logout">
+                                            @csrf
+                                        <a class="dropdown-item" href="javascript:document.logout.submit()">ログアウト</a>
+                                    </form>
                     <a class="text-danger" href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>

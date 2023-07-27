@@ -13,12 +13,12 @@
         @foreach($a as $user)
         @if($user['admin'] != 1)
         <tbody>
-        <tr>
-            <td>{{ $user['id'] }}</td>
-            <td>{{ $user['name'] }}</td>
-            <td>{{ $user['email'] }}</td>
-            <td>{{ $user['total_view_count'] }}</td>
-        </tr>
+            <tr>
+                <td>{{ $user['id'] }}</td>
+                <td>{{ $user['name'] }}</td>
+                <td>{{ $user['email'] }}</td>
+                <td>{{ $user['total_view_count'] }}</td>
+            </tr>
         </tbody>
         @endif
         @endforeach

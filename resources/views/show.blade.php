@@ -9,7 +9,11 @@
         </tr>
         <tr>
             <th>投稿者</th>
-            <td>{{ $post['user']['name'] }}</td>   
+            @if(empty($post['user']['name']))
+            <td>アカウントは存在しません。</td>
+        @elseif(!empty($post['user']['name']))
+            <td>{{ $post['user']['name'] }}</td>  
+        @endif 
         </tr>
         <tr>
             <th>投稿日</th>
@@ -32,7 +36,7 @@
 
         <tr>
             <th scope='col' class="pl-3 pb-3">
-                <a href="{{ route('comments.create' ,['post'=>$post['id']] ) }}"><!--★コメント入力画面へ遷移-->
+                <a href="{{ route('comments.create' ,['post'=>$post['id']] ) }}">
                     <button type="submit" class="btn text-white">💬:コメント</button>
                 </a>
             </th>
@@ -57,7 +61,7 @@
                 コメント : {{ $comments['comment']}}
             </th>
             <th>  
-            <form action="{{ route('comments.destroy', $comments['id']) }}" method="post"><!--★コメント削除機能-->
+            <form action="{{ route('comments.destroy', $comments['id']) }}" method="post">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger text-nowrap" onclick='return confirm("本当にコメントを削除しますか？");'>削除</button>
@@ -68,14 +72,16 @@
     </table>
     <div class="text-right">
         <table>
-        <tr>
-        <th><form action="{{ route('violation.create',['post'=>$post['id']]) }}" method="get"> <!--★違反報告ページへ遷移-->
-            <button type="submit" class="btn btn-primary text-nowrap">違反報告ページへ</button>
-        </form></th>
-        <th><a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a></th>
-        <th><a href="/home" class="btn btn-secondary">ホームへ</a></th>
-        </tr>
-    </table>
+            <tr>
+                <th>
+                    <form action="{{ route('violation.create',['post'=>$post['id']]) }}" method="get">
+                        <button type="submit" class="btn btn-primary text-nowrap">違反報告ページへ</button>
+                    </form>
+                </th>
+                <th><a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a></th>
+                <th><a href="/home" class="btn btn-secondary">ホームへ</a></th>
+            </tr>
+        </table>
     </div>
 </div>
 
@@ -92,14 +98,14 @@ $(function () {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/ajaxlike',  //routeの記述
-                type: 'POST', //受け取り方法の記述（GETもある）
+                url: '/ajaxlike',  
+                type: 'POST', 
                 data: {
-                    'posts_id': likePostId //コントローラーに渡すパラメーター
+                    'posts_id': likePostId 
                 },
         })
     
-            // Ajaxリクエストが成功した場合
+            
            
             .done(function (data) {
                 if(data.exist == null){
@@ -107,17 +113,13 @@ $(function () {
                 }else{
                     $('.like').html('❤');
                 }
-    //lovedクラスを追加
-               
-    
-    //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+  
                 $this.next('.likesCount').html(data.postLikesCount); 
     
             })
-            // Ajaxリクエストが失敗した場合
+            
             .fail(function (data, xhr, err) {
-    //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
-    //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+   
                 console.log('エラー');
                 console.log(err);
                 console.log(xhr);

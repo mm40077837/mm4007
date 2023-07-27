@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-    <!--新規投稿時のバリデーション-->
     <div>  
         @if ($errors->any())  
             <ul>  
@@ -15,8 +14,7 @@
     <div class="text-center">
         <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
             @method('patch')
-            <!--enctype="multipart/form-data" をformに入れないとファイルは登録されない--> 
-            @csrf<!--外部アクセス拒否-->
+            @csrf
             <div class="mb-3">
                 <lavel for="formGroupExampleInput" class="form-lavel">タイトル</lavel>
                 <input type="text" name="title" placeholder="タイトル" value="{{ old('title', $post['title']) }}">

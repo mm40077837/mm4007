@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\support\Facades\Auth;
 use App\Post;
 use App\Comment;
 use App\User;
@@ -28,16 +29,13 @@ class HomeController extends Controller
      */
     public function index(Request $request, Post $post) 
     {
-        //クエリの生成
-        $query = Post::query();
 
-        //キーワード受け取り
+        $query = Post::query()->where('del_flg', 0);
+
         $keyword = $request->input('keyword');
 
-        //dateの受け取り
         $date = $request->input('date');
         
-        //もしキーワードがあったら
         if(!empty($keyword))
         {
             $query->whereHas('user', function($q) use($keyword){
@@ -49,16 +47,16 @@ class HomeController extends Controller
         if(!empty($date))
         {
             $query->whereHas('user', function($q) use($date){
+
             $carbon = new Carbon($date);
 
             $q->whereDate('date','>=', $date );
                 
             });
         }
-        $type = 0;
-        $posts = $query->where('del_flg', $type)->orderBy('date','desc')->get();
-        // dd($posts[0]->user);
-
+        
+        $posts = $query->with('user')->orderBy('date','desc')->get();
+       
         return view('home', compact('posts','keyword'));
 
         }

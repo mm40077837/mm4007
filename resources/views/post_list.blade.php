@@ -13,8 +13,12 @@
                             <img src="{{ asset('storage/'.$post->user->icon) }}" style=" padding: 10px; width: 90px; height: 90px; object-fit: cover; border-radius: 50%;"></th>
                         @endif
                 </th>
-                    <th scope='col' class="p-3">{{ $post['title'] }}</th> <!--★詳細画面へ遷移-->   
-                    <th scope='col' class="pr-3">{{ $post['user']['name'] }}</th>
+                    <th scope='col' class="p-3">{{ $post['title'] }}</th>  
+                    @if(empty($post['user']['name']))
+                        <th scope='col' class="pr-3">アカウントは存在しません。</th>
+                    @elseif(!empty($post['user']['name']))
+                        <th scope='col' class="pr-3">{{ $post['user']['name'] }}</th>
+                    @endif
                     <th scope='col' class="pr-3">{{ $post['date'] }}</th>
                 </tr>
                 <tr>
@@ -28,7 +32,7 @@
                         <img src="{{ asset('storage/'.$post['image']) }}" style="width: 230px; height: 230px; object-fit: cover;">
                         @endif<br>
                         違反報告件数:{{ $post['violation_count'] }}<br>
-                        <form action="{{ route('admin.logicaldelete', $post['id']) }}" method="get" onclick='return confirm("本当に表示停止しますか？");'> <!--★userの管理画面ページへ遷移-->
+                        <form action="{{ route('admin.logicaldelete', $post['id']) }}" method="get" onclick='return confirm("本当に表示停止しますか？");'> 
                                 <button type="submit" class="btn btn-danger text-nowrap">表示停止</button>
                         </form>
                     </th>
@@ -38,8 +42,8 @@
     </div>
 </div>
 <div class="text-right mx-5">
-            <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
-         </div>
+    <a href="#" class="btn btn-secondary"onclick='window.history.back(-1);'>戻る</a>
+</div>
 @endsection
 
 

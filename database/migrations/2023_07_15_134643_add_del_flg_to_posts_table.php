@@ -14,7 +14,7 @@ class AddDelFlgToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('del_flg',0); //デフォルトにはなく編集にて追加したカラム
+            $table->integer('del_flg',0); 
         });
     }
 
@@ -26,7 +26,7 @@ class AddDelFlgToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            $table->dropColumn('del_flg',0);
         });
     }
 }

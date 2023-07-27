@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <!--バリデーション-->
+    
     <div>  
         @if ($errors->any())  
             <ul>  

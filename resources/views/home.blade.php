@@ -7,15 +7,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8 d-flex mx-5">
             <form action="{{ route('home') }}" method="GET"> 
-                @csrf<!--外部アクセス拒否-->
+                @csrf
                 <input type="text" name="keyword" placeholder="検索内容" value="{{ $keyword }}">       
                 <input type="date" name="date" placeholder="ユーザ名">
                 <button type="submit" class="btn btn-primary text-nowrap">投稿検索</button>
             </form>
-            <a href="{{ route('posts.create') }}" class="mx-3"> <!--★新規投稿画面へ遷移-->
+            <a href="{{ route('posts.create') }}" class="mx-3"> 
                 <button type="submit" class="btn btn-primary text-nowrap">新規追加</button>
             </a>
-            <a href="{{ route('mypage.index') }}"><!--★マイページへ遷移-->
+            <a href="{{ route('mypage.index') }}">
                 <button type="submit" class="btn btn-primary text-nowrap">マイページへ</button>
             </a>
             
@@ -35,8 +35,12 @@
                             <img src="{{ asset('storage/'.$post->user->icon) }}" style=" padding: 10px; width: 90px; height: 90px; object-fit: cover; border-radius: 50%;"></th>
                         @endif
                     </th>
-                    <th scope='col' class="p-3"><a href="{{ route('posts.show',$post['id']) }}" class="text-secondary">{{ $post['title'] }}</a></th> <!--★詳細画面へ遷移-->   
-                    <th scope='col' class="pr-3">{{ $post['user']['name'] }}</th>
+                    <th scope='col' class="p-3"><a href="{{ route('posts.show',$post['id']) }}" class="text-secondary">{{ $post['title'] }}</a></th>   
+                    @if(empty($post->user->name))
+                        <th scope='col' class="pr-3">アカウントは存在しません。</th>
+                    @elseif(!empty($post->user->name))
+                        <th scope='col' class="pr-3">{{ $post->user->name }}</th>
+                    @endif
                     <th scope='col' class="pr-3">{{ $post['date'] }}</th>
                 </tr>
                 <tr>
@@ -58,13 +62,13 @@
 @else
 <div class="text-center">
     <div class="m-5">
-        <form action="{{ route('admin.strator') }}" method="get"> <!--★userの管理画面ページへ遷移-->
-                    <button type="submit" class="btn btn-primary text-nowrap">ユーザー管理ページへ</button>
+        <form action="{{ route('admin.strator') }}" method="get"> 
+            <button type="submit" class="btn btn-primary text-nowrap">ユーザー管理ページへ</button>
         </form>
     </div>
     <div class="">
-        <form action="{{ route('admin.post') }}" method="get"> <!--★postの管理画面ページへ遷移-->
-                    <button type="submit" class="btn btn-primary text-nowrap">投稿管理ページへ</button>
+        <form action="{{ route('admin.post') }}" method="get">
+            <button type="submit" class="btn btn-primary text-nowrap">投稿管理ページへ</button>
         </form>
     </div>
 <div>

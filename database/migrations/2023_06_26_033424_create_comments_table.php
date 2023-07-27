@@ -14,10 +14,10 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id'); //id
-            $table->string('comment','255'); //コメント入力
-            $table->integer('users_id'); //ユーザid　リレーション
-            $table->integer('posts_id'); //投稿id　リレーション
+            $table->bigIncrements('id'); 
+            $table->string('comment','255'); 
+            $table->integer('users_id'); 
+            $table->integer('posts_id'); 
             $table->timestamps();
         });
     }

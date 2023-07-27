@@ -15,9 +15,9 @@ class CreateViolataionsTable extends Migration
     {
         Schema::create('violations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('users_id'); //ユーザid　リレーション
-            $table->integer('posts_id'); //投稿id　リレーション
-            $table->string('report','255'); //違反警告理由
+            $table->integer('users_id'); 
+            $table->integer('posts_id'); 
+            $table->string('report','255'); 
             $table->timestamps();
         });
     }

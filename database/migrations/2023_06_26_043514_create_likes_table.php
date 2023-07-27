@@ -15,8 +15,8 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('users_id'); //ユーザid　リレーション
-            $table->integer('posts_id'); //投稿id　リレーション
+            $table->integer('users_id'); 
+            $table->integer('posts_id'); 
             $table->timestamps();
         });
     }

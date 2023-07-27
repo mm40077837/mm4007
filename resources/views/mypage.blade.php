@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class=""><!--アカウント表示-->
+<div class="">
     <div class="text-center">
         @if(empty(Auth::user()->icon))
         NO IMAGE
@@ -17,21 +17,24 @@
     </div>
 
     <div class="d-flex justify-content-sm-center my-3">
-                    <form action="{{ route('users.edit', Auth::user()) }}" method="get" class="mx-1"><!--★アカウント編集画面へ遷移-->
-                        <button type="submit" class="btn btn-primary text-nowrap">編集</button>
-                    </form>
-        
-                    <form action="{{ route('users.destroy', Auth::user()) }}" method="post" class="mx-1"><!--★アカウント削除機能-->
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-primary text-nowrap" onclick='return confirm("本当に退会しますか？");'>退会</button>
-                    </form>
-                
-                    <form action="{{ route('users.store')}}" mehod="post" class="mx-1"><!--★アカウントアイコン追加機能-->
-                        <button type="submit" class="btn btn-primary text-nowrap">アイコン追加</button>
-                    </form>
-                    <a href="#" class="btn btn-secondary mx-1" onclick='window.history.back(-1);'>戻る</a>
-                    <a href="/home" class="btn btn-secondary mx-1">ホームへ</a>
+        <form action="{{ route('users.edit', Auth::user()) }}" method="get" class="mx-1">
+            <button type="submit" class="btn btn-primary text-nowrap">編集</button>
+        </form>
+
+        <form action="{{ route('users.destroy', Auth::user()) }}" method="post" class="mx-1">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-primary text-nowrap" onclick='return confirm("本当に退会しますか？");'>退会</button>
+        </form>
+    
+        <form action="{{ route('users.store')}}" mehod="post" class="mx-1">
+            <button type="submit" class="btn btn-primary text-nowrap">アイコン追加・変更</button>
+        </form>
+        <form action="{{ route('heart.list')}}" mehod="get" class="mx-1">
+            <button type="submit" class="btn btn-primary text-nowrap">いいね投稿一覧</button>
+        </form>
+        <a href="#" class="btn btn-secondary mx-1" onclick='window.history.back(-1);'>戻る</a>
+        <a href="/home" class="btn btn-secondary mx-1">ホームへ</a>
     </div>
 </div>
 
@@ -57,10 +60,10 @@
             </tr>
             <tr>
                 <td class="d-flex justify-content-around my-3 mx-5">
-                    <form action="{{ route('posts.edit',$post['id']) }}" method="get"><!--★投稿編集画面へ遷移-->
+                    <form action="{{ route('posts.edit',$post['id']) }}" method="get">
                         <button type="submit" class="btn btn-primary text-nowrap">編集</button>
                     </form>
-                    <form action="{{ route('posts.destroy',$post['id']) }}" method="POST" onclick='return confirm("本当に削除しますか？");'><!--★投稿削除機能-->
+                    <form action="{{ route('posts.destroy',$post['id']) }}" method="POST" onclick='return confirm("本当に削除しますか？");'>
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger text-nowrap">削除</button>
@@ -68,8 +71,6 @@
                 </td>      
             </tr>
         </table>
-    @endforeach    
-    
+    @endforeach      
 </div>
-
 @endsection

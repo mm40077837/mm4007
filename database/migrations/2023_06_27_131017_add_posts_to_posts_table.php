@@ -14,8 +14,9 @@ class AddPostsToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            // $table->string('title','255'); //titileカラムの追加
-            $table->date('date'); //dateカラムの追加
+            
+            $table->date('date'); 
+            
         });
     }
 
@@ -27,7 +28,7 @@ class AddPostsToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            $table->dropColumn('date');
         });
     }
 }

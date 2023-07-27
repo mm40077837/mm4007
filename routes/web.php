@@ -24,23 +24,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home'); //メインページ
-Route::resource('posts', 'PostController'); //投稿
-Route::resource('users', 'UsersController'); //アカウント
-Route::resource('comments', 'CommentController'); //コメント
+Route::group(['middleware' => 'auth'], function(){
+    
+Route::get('/home', 'HomeController@index')->name('home'); 
+Route::resource('posts', 'PostController'); 
+Route::resource('users', 'UsersController'); 
+Route::resource('comments', 'CommentController'); 
 Route::get('/mypage', [DisplayController::class, 'index'])->name('mypage.index');
 Route::post('/user_create/{user}', [DisplayController::class, 'iconupdate'])->name('users.iconupdate');
-Route::get('/violation_create/{post}', [DisplayController::class, 'createviolation'])->name('violation.create');//違反報告ページへ
-Route::post('/show', [DisplayController::class, 'storeviolation'])->name('violation.store');//違反報告して投稿
+Route::get('/violation_create/{post}', [DisplayController::class, 'createviolation'])->name('violation.create');
+Route::post('/show', [DisplayController::class, 'storeviolation'])->name('violation.store');
 Route::post('/home', 'PostController@index')->name('posts.index');
 
-Route::get('/user_list', [DisplayController::class, 'administrator'])->name('admin.strator');//管理者画面（ユーザーの一覧））
-Route::get('/post_list', [DisplayController::class, 'adminpost'])->name('admin.post');//管理者画面（投稿の一覧）
-Route::get('/post_list_delete/{id}', [DisplayController::class, 'logicaldelete'])->name('admin.logicaldelete');//表示停止（論理削除）
+Route::get('/user_list', [DisplayController::class, 'administrator'])->name('admin.strator');
+Route::get('/post_list', [DisplayController::class, 'adminpost'])->name('admin.post');
+Route::get('/post_list_delete/{id}', [DisplayController::class, 'logicaldelete'])->name('admin.logicaldelete');
+Route::get('/heart_list', [DisplayController::class, 'heartlist'])->name('heart.list');
 
-
-//ログイン中のユーザーのみアクセス可能
-
-    //「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
 Route::post('ajaxlike', 'PostController@ajaxlike')->name('posts.ajaxlike');
 
+});
